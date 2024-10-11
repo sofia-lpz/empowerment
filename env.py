@@ -3,7 +3,7 @@ from __future__ import annotations
 from minigrid.core.constants import COLOR_NAMES
 from minigrid.core.grid import Grid
 from minigrid.core.mission import MissionSpace
-from minigrid.core.world_object import Door, Goal, Key, Wall
+from minigrid.core.world_object import Door, Goal, Key, Wall, Lava
 from minigrid.manual_control import ManualControl
 from minigrid.minigrid_env import MiniGridEnv
 
@@ -29,7 +29,7 @@ class SimpleEnv(MiniGridEnv):
             mission_space=mission_space,
             grid_size=size,
             # Set this to True for maximum speed
-            see_through_walls=True,
+            see_through_walls=False,
             max_steps=max_steps,
             **kwargs,
         )
@@ -46,12 +46,18 @@ class SimpleEnv(MiniGridEnv):
         self.grid.wall_rect(0, 0, width, height)
 
         # Generate vertical separation wall
-        for i in range(0, height):
-            self.grid.set(5, i, Wall())
+        #for i in range(0, height):
+         #   self.grid.set(5, i, Wall())
         
         # Place the door and key
         self.grid.set(5, 6, Door(COLOR_NAMES[0], is_locked=True))
         self.grid.set(3, 6, Key(COLOR_NAMES[0]))
+        
+        
+        # Place lava
+        self.grid.set(7, 6, Lava())
+        self.grid.set(7, 7, Lava())
+        self.grid.set(7, 8, Lava())
 
         # Place a goal square in the bottom-right corner
         self.put_obj(Goal(), width - 2, height - 2)
