@@ -51,6 +51,34 @@ def convert_obs_to_tuple(obs):
     y = obs % num_cols  # modulo operation
     return (x, y)
 
+def dfs(state, steps_remaining):
+    visited_states = set()
+
+    if steps_remaining == 0:
+        return
+    visited_states.add(state)
+    for action in range(env.action_space.n):
+        env_test = gym.make('SimpleGrid-v0', obstacle_map=obstacle_map)
+        env_test.reset(seed=1, options={"start_loc": state[0] * num_cols + state[1], "goal_loc": options['goal_loc']})
+        obs, _, done, _, _ = env_test.step(action)
+        next_state = convert_obs_to_tuple(obs)
+        if next_state not in visited_states and not done:
+            dfs(next_state, steps_remaining - 1)
+
+def get_empowerment(x, y, max_steps=5):
+
+    empowerment_table = np.zeros((num_rows, num_cols))
+
+    for x in range(num_rows):
+        for y in range(num_cols):
+            # Skip cells with obstacles
+            if env.obstacle_map[x][y] == '1':
+                empowerment_table[x, y] = np.nan
+                continue
+
+    return empowerment_table
+    
+
 #train
 for episode in range(num_episodes):
     obs, info = env.reset(seed=1, options=options)
