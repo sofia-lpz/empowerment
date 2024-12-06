@@ -37,16 +37,7 @@ def convert_obs_to_tuple(obs):
     return (x, y)
 
 def get_empowerment(state, max_steps=10):
-    """
-    Calculate the empowerment for a given state using information theory.
-    
-    Parameters:
-    - state: Tuple (x, y), the agent's current position.
-    - max_steps: The number of steps to consider for empowerment.
 
-    Returns:
-    - empowerment: The empowerment value (in bits) for the given state.
-    """
     def simulate_action_sequence(env, state, actions):
         """simula aciones en el ambiente desde el POI y regresa la posicion"""
         x, y = state
@@ -61,7 +52,7 @@ def get_empowerment(state, max_steps=10):
     action_space_size = env.action_space.n
     all_action_sequences = list(np.ndindex((action_space_size,) * max_steps))
 
-    # 2. Simulate resulting states and count occurrences
+    # 2. Simulate resulting states and count ways to reach them
     state_action_counts = {}
     for actions in all_action_sequences:
         resulting_state = simulate_action_sequence(env, state, actions)
