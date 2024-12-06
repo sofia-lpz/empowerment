@@ -3,18 +3,7 @@ from gym_simplegrid.envs import SimpleGridEnv
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-
-obstacle_map = [
-    "10001000",
-    "10010000",
-    "00000001",
-    "01000001",
-]
-
-options ={
-        'start_loc': 12,
-        'goal_loc': (2,0)
-    }
+from env_options import obstacle_map, options
 
 env = gym.make(
     'SimpleGrid-v0', 

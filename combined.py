@@ -3,18 +3,7 @@ from gym_simplegrid.envs import SimpleGridEnv
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-
-obstacle_map = [
-    "10001000",
-    "10010000",
-    "00000001",
-    "01000001",
-]
-
-options ={
-        'start_loc': 12,
-        'goal_loc': (2,0)
-    }
+from env_options import obstacle_map, options
 
 env = gym.make(
     'SimpleGrid-v0', 
@@ -25,6 +14,7 @@ num_rows = len(obstacle_map)
 num_cols = len(obstacle_map[0])
 
 q_table = np.loadtxt('qtable.txt').reshape(len(obstacle_map), len(obstacle_map[0]), env.action_space.n)
+q_table = np.loadtxt('eqtable.txt').reshape(len(obstacle_map), len(obstacle_map[0]), env.action_space.n)
 
 def choose_action(state):
     return np.argmax(q_table[state[0], state[1]])
