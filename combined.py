@@ -14,7 +14,7 @@ num_rows = len(obstacle_map)
 num_cols = len(obstacle_map[0])
 
 q_table = np.loadtxt('qtable.txt').reshape(len(obstacle_map), len(obstacle_map[0]), env.action_space.n)
-q_table = np.loadtxt('eqtable.txt').reshape(len(obstacle_map), len(obstacle_map[0]), env.action_space.n)
+eq_table = np.loadtxt('eqtable.txt').reshape(len(obstacle_map), len(obstacle_map[0]), env.action_space.n)
 
 def choose_action(state):
     return np.argmax(q_table[state[0], state[1]])
@@ -24,7 +24,6 @@ def convert_obs_to_tuple(obs):
     y = obs % num_cols  # modulo operation
     return (x, y)
 
-# Test with visualization
 env_test = gym.make(
     'SimpleGrid-v0', 
     obstacle_map=obstacle_map, 
@@ -38,7 +37,6 @@ done = False
 total_reward = 0
 
 while not done:
-    # Use epsilon=0 for testing to always choose best action
     action = choose_action(state)
     obs, reward, done, _, info = env_test.step(action)
 
